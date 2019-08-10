@@ -1,4 +1,5 @@
 #!/bin/bash
+if [[ `pgrep curl` != "" ]]; then kill `pgrep curl`; fi
 if [[ $1 == *"https://osu.ppy.sh/b/"* ]]; then
  new_url=$(curl --resolve 'osu.ppy.sh:443:104.20.52.28' -Ls -o /dev/null -w %{url_effective} $1)
  almost_id=$(sed "s/https\:\/\/osu\.ppy\.sh\/beatmapsets\///g" <<< $new_url)
