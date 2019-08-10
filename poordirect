@@ -1,0 +1,15 @@
+#!/bin/bash
+if [[ $1 == *"https://osu.ppy.sh/b/"* ]]; then
+ new_url=$(curl --resolve 'osu.ppy.sh:443:104.20.52.28' -Ls -o /dev/null -w %{url_effective} $1)
+ almost_id=$(sed "s/https\:\/\/osu\.ppy\.sh\/beatmapsets\///g" <<< $new_url)
+ id=$(sed "s/#.*//g" <<< $almost_id)
+ curl --resolve 'osu.ppy.sh:443:104.20.52.28' --cookie ~/.cookies.txt -L https://osu.ppy.sh/beatmapsets/$id/download?noVideo=1 --output /tmp/$id.osz
+ xdg-open /tmp/$id.osz
+elif [[ $1 == *"http://osu.ppy.sh/b/"* ]]; then
+ new_url=$(curl --resolve 'osu.ppy.sh:80:104.20.52.28' -Ls -o /dev/null -w %{url_effective} $1)
+ almost_id=$(sed "s/http\:\/\/osu\.ppy\.sh\/beatmapsets\///g" <<< $new_url)
+ id=$(sed "s/#.*//g" <<< $almost_id)
+ curl --resolve 'osu.ppy.sh:80:104.20.52.28' --cookie ~/.cookies.txt -L http://osu.ppy.sh/beatmapsets/$id/download?noVideo=1 --output /tmp/$id.osz
+ xdg-open /tmp/$id.osz
+else x-www-browser $1
+fi

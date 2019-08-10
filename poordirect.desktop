@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=poordirect
+Exec=/usr/bin/poordirect %u
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+StartupNotify=false
